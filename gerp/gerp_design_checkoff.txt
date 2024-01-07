@@ -1,0 +1,122 @@
+Names: Eleanor Harty and Allen Wang
+utlns: eharty01 and zwang46
+
+Answer the questions below, and submit your answers under the assignment
+"gerp Design Checkoff" on Gradescope. You must sign up for a design checkoff
+slot with a TA to discuss your provided answers (see spec for sign up link).
+Make sure to submit this file *prior* to your design checkoff.
+
+For each question, give as much detail as you feel is necessary.
+
+1. What classes and structs will you implement for your program? For each class,
+   provide a list of public functions of that class; for each struct, provide a
+   list of member variables.
+        
+   command.h Class:
+      Functions: start_program (wrapper function to access in main and calls
+      the query loop)
+         
+   stringProcessing.h Class:
+      Functions: stripNonAlphaNum, alphaNumCheck
+
+   KeyWordInfo struct:
+      constructor1:
+      constructor2: KeyWordInfo(string file_name, int line_num, 
+      string line_content)
+
+   hash_table.h Class: 
+      public: constructor, destructor, print, expand
+      private: struct file search {
+                  string file_name;
+                  int line_num;
+                  string line_content;
+               } (NOTE: not sure if it's necessary)     
+   
+               struct collision_handing {
+                  bool isFilledl
+                  KeyType key;
+                  ValueType value;
+               }
+
+2. Describe the index that you will build for querying. What specific data
+   structures will you use to build this index? *Important*: Bring an
+   accompanying drawing of your index structure when you come to your checkoff.
+
+   We'll build our index in hash_table.cpp, we'll model it after an array 
+   where the index/address is the word and the stored value within that index
+   will be a vector of structs containing all the instances that word appears
+   and when/where it appears in terms of file_name, line number, and the 
+   contents of the line.
+
+3. To use your index, you will use something for lookup (the key) and you will
+   get some associated data back (the value). What are the C++ *types* of your
+   index's key and value? Examples of valid types: int, string,
+   vector<string>, vector<list<string>>; you may also define custom types using
+   structs/classes, e.g., Animal and vector<Animal> are valid types if you
+   define a struct/class named Animal. If your key/value types involve custom
+   classes/structs, they should be included in your answer to question #1.
+                
+Key type: string word
+Value type: a vector that stores file_search structs (vector<file_search>)  
+(we think it's better than stack, unordered_map, queue)  
+
+4. What do you expect the *space* complexity of your index will be? How many
+   times will a single line be stored according to your data structures?
+
+Space complexity will be the number of distinct words within the directory.
+A single line will be stored as many times as there are distinct words within
+that line.
+
+5. What is the time complexity of *building* your index? If you refer to some
+   variable, be sure to specify what the variable refers to, e.g., in "O(n)",
+   state explicitly what "n" is.
+
+The time complexity should be O(N), because we need to traverse every file
+and build index for each word. So in this case N should represent the total
+number of words in all the files.
+   
+6. What is the time complexity of *using* your index for lookup? As above,
+   be specific about variables you use.
+
+Since our index uses hash tables, the time complexity of using it will just
+be O(1).
+                
+7. How will you handle case-sensitive search?
+   What is the time complexity (should be close to O(1))?
+   
+Since we're using a direct lookup/hash tables, the time complexity is close 
+to O(1).
+
+8. How will you handle case-insensitive search?
+   What is the time complexity (should be close to O(1))?
+   
+In this case we have to convert all of the uppercase to lowercase before we
+do the searching, but since we are still performing hash table, so the time
+complixity remains to be close to O(1)
+
+9. How are you handling duplicate words within a line? For example, if a line
+   contains "the cat and the dog" and a user searches "the", this line should
+   only be reported once. How will your implementaiton achieve this?
+
+Before we store another instance of the word we will check if the line number
+and file name is the same, if it is we will tell the program to move to the next
+instance/not print that one.
+
+10. How will you test your implementation and what specific evidence of testing
+    will you submit?
+
+We will mostly be using diff to test our implementation and make sure our
+outputs align exactly with the program. We also have a few unit tests from
+phase one we can submit. As evidence we can submit the testing files we created 
+to run diff on against the reference and or we can submit our output files that 
+we generated from those tests.
+
+11. What is your schedule for completing this assignment? Include specific dates
+    and the tasks that you would like to accomplish by each date. Do not forget
+    testing!
+    
+We want to start working on our hash table on Tuesday and have it implemented
+by Wednesday so we can start building our index which will probably take into
+Thursday. We plan to work on the commands/searching through this index from 
+Thursday into Friday and possibly Saturday. The rest of the time we will use
+for testing and working on the readme.
