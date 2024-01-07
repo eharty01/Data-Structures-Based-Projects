@@ -1,5 +1,0 @@
-Roses are red.
-Violets are purple.
-Unexpected errors,
-in my code.
-ROSES
