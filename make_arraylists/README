@@ -1,0 +1,83 @@
+(A) *Title, Course, Date, and Author of HW*
+Title of HW: hw_arraylists (or COMP 15 HW 1 Cheshire ConCATenation)
+Author: Eleanor Harty 
+Date: Sept. 20, 2023
+Course: CS15
+
+(B) *Purpose of the program:*
+    This program is to teach students how to create and manipulate arrays and just generally get more experience interacting with the data structure to understand it better. As well as familiarize themselves with unit testing and style conventions of CS15.
+
+
+(C) *Acknowledgements:*
+    I received help from many CS15 TAs including Emily, Jeff, Anush, Austen,
+Yukai, Sarah, Kathy, Liam, Erin, and Ella.
+
+(D) *Files Provided*
+
+    CharArrayList.cpp: Implementation of CharArrayList class.
+
+
+    CharArrayList.h: Interface of the CharArrayList class.
+
+
+    unit_tests.h: Unit tests for the CharArrayList class.
+
+
+    Makefile: compiles and runs the program.
+
+
+    README: This file.
+
+
+(E) *How to Compile and Run the program*
+    Use the unit_test command to compile and run the program.
+
+(F) *Data Structures and Algorithms Used*
+    This week we worked exclusively with arrays. In c++ an array is a variable that can stor multible values of the same type, for this assignment we used stored variables of the char type. Each variable is stored at an index (the first index is 0, the second is 1, etc) and you can use those indexes to locate the variable you want. Under the hood arrays are pointers and you can allocate a new, larger array by copying elements over and recycling the old array. Because of these properties we were able to locate and change different elements within the array as well as add and remove them with some of our functions this week.
+    Some advantages of arrays are that they can represent multiple data items of the same type, these items can be accessed by index number, and arrays are relatively easy to implement. Some disadvantages of arrays are their fixed size so there is a certain lack of flexibility in that if the size of the array needs to be increased a new one must be created, it can also lead to wasted space if not everything index is being used. Finally, inserting or deleting things in arrays can be time consumming because you need to shift all the data over to accomplish this which takes runtime.
+
+(G) *Testing*
+    I tested and debugged largely chronologically in terms of the order in which the functions were listed in the spec. I started with the constructors and called a unit test for each to see if they were initializing properly (I didn't write an explicit test for the destructor but used valgrind as my test for that). I then moved on to functions like isEmpty to pushAtFront. For each of these functions I ensured I made a test that worked with each type of array we could construct (for example, an empty array, an array with one element, and an array with multiple elements). If there was an error message we were supposed to give I also purposely made tests to invoke these runtime or range errors. To be honest, I didn't really have much trouble with these tests and passed most of them without having to rework my code, if anything the few discrepancies I ran into were mostly from copying a message wrong into my unit test. Then since the insertAt already had tests written I focused on passing those, the trickiest being the large list for me, I got very stuck on working out the bug when it actually turned out that I had just copy and pasted the error message wrong. After that I tested the functions from insertInOrder to concatenate in that order, again I tried to think of all the different arrays that could be called on it and specifically create tests that required my program to throw error messages, or for concatenate try as many different array combinations as I could think of. Again these tests were mostly fine, I did have to redo my popFromBack and removeAt functions and include a part that accounted for decreasing the array. Finally, I realized I forgot to test my copy constructor and assignment operator, so I wrote tests for those copying the same lists and then changing an element of one list and comparing the two to see the discrepancy that appeared between them.
+
+(H) *Hours Spent*
+    I spent approximately 15 hours on this project.
+
+(I) *Timer Questions*
+I copied the table below from terminal and I answered the questions below the table.
+----------------------------------------------------------------------
+INSERTION OPERATION                                 Time (nanoseconds)
+----------------------------------------------------------------------
+pushAtFront 100 times                               2586123           
+----------------------------------------------------------------------
+pushAtBack 100 times                                615               
+----------------------------------------------------------------------
+insertAt middle of list 100 times                   1467034           
+----------------------------------------------------------------------
+REMOVAL OPERATION                                   Time (nanoseconds)
+----------------------------------------------------------------------
+popFromFront 100 times                              3370076           
+----------------------------------------------------------------------
+popFromBack 100 times                               1397              
+----------------------------------------------------------------------
+removeAt middle of list 100 times                   1670428           
+----------------------------------------------------------------------
+ACCESS OPERATION                                    Time (nanoseconds)
+----------------------------------------------------------------------
+call first() 100 times                              687               
+----------------------------------------------------------------------
+call last() 100 times                               646               
+----------------------------------------------------------------------
+call elementAt() for middle of list 100 times       549               
+----------------------------------------------------------------------
+
+Question 1: (the units for all numbers are nanoseconds)
+    INSERTION (fastest to slowest) - 615 (pushAtBAck), 1467034 (insertAt, middle of list), 2586123 (pushAtFront),
+
+    REMOVAL (fastest to slowest) - 1397 (popFromBack), 1670428 (removeAt middle of list), 3370076 (popFromFront)
+
+    ACCESS (fastest to slowest) - 549 (call elementAt() for middle of list), 646 (call last()), 687 (call first())
+
+    Overall Ranking (from fastest to slowest) - Access, Insertion, Removal
+
+Question 2: 
+Some operations were faster than others because they required less shifting from the array. For example in the removal operation if you removed an element from the front you had to shift all elements in the array up by one. This of course took longer than removing an element from the middle of the array which only required some elements to be moved up, while the shortest operation was removing from the back because you didn't have to shift anything after you got rid of the last element. This logic also explains the results for the insert operation, because putting something on at the front required everything in the array to shift back to make room for it, whereas inserting in the middle required only some elements to move back, and inserting at the back required no shift. Finally, the access operations all took approximately the same time because you don't need to shift anything to access an element of an array you can just directly go to the specified index, so accessing an array at any given position is essentially the same one step of locating the position to see the element it contains.
