@@ -1,0 +1,146 @@
+Name: Eleanor Harty
+utln: eharty01 
+
+Answer the questions below, and submit your answers under the assignment
+"CalcYouLater Design Checkoff" on Gradescope. You must sign up for a design
+checkoff slot with a TA to discuss your provided answers (see spec for link).
+
+Unless otherwise specified, your answers below should be *brief*: no more
+than three sentences/question.
+
+        
+1. Are you comfortable using try-catch? 
+   Yes, I don't remember it perfectly but have some good examples from the 
+   linked lists and array lists HW.
+
+Lets say my program consists of: 
+
+funcA() {
+     throw runtime_error() 
+}
+
+funcB() {
+    workA()
+    funcA()
+    workB()
+}
+
+funcC() {
+    try {
+         funcB()
+    }
+    catch(runtime_error) {
+       workC()
+    }
+}
+
+I call funcC(). Which of the "work" functions will be called, and in what order?
+
+Answer:  
+   Since you call funcB first it will go through that function systematically
+   calling workA() then workB(), finally it will return to funcC() and work on 
+   the "catch" part of the function calling workC().
+
+2. What happens if I try to perform "+" between a string and an integer? Which
+   elements are popped off the stack and remain popped off?
+
+Answer:
+   The program would generate the error message "Error: datum_not_int\n". 
+   Both elements would be popped off and remain popped off.
+
+
+3. What does `exec` do? What does `file` do? What does `if` do?
+
+Answer: 
+   EXEC - exec takes the topmost element on the stack, if the element is not an
+   rstring it should print an error message and continue to accept input. If it
+   is an rstring exec will execute the commands within the rstring.
+
+   FILE - file pops the top element from the stack, if the element is not an 
+   rstring it should print an error message and continue to accept input. If it
+   is an rstring open the file to read and process its commands as if they
+   had been typed into the command loop (if you can't open or read the file
+   throw an error).
+
+   IF - if pops two rstrings off the stack and one boolean, the first rstring
+   popped off will be executed if the boolean is false. If the boolean is true
+   the second rstring popped will be executed. If any of the elements are of the
+   wrong type the program should send an error message and continue to accept
+   input.
+
+4. How will your program interact with the user? What should happen if your
+   program encounters an error during this interaction?
+
+Answer:
+   The program takes input from the user from which they will execute the 
+   commands the user gives. If the program encounters an error during this 
+   interaction the program should notify the user but never crash (ie it should
+   keep accepting input).
+
+
+5. What classes will you need in your program? What are the important functions
+   and member variables that those classes will comprise? How will the classes
+   interact (i.e., which classes will be clients of others)?
+   What data structures will you use? It is okay if you use more than three
+   sentences here. Feel free to provide your answer in list form.
+
+Answer: 
+   classes
+      - DatumStack (which includes Datum)
+         functions
+            - DatumStack contains a couple functions like constructors to make
+            the stack, isEmpty (to check if it's empty or not), clear (to clear
+            the stack), size (to report the stack's size), top (to report the
+            top element of the stack), pop (to remove the top element of the
+            stack), and push (to add a datum element to the top of the stack).
+      - parser
+         function
+            - parser contains one function, parseRStringreads inputs and parses
+            them into workable rstrings for RPNCalc to use
+      - RPNCalc
+         functions
+            - a default constructor, a destructor, and a run function to call 
+            on different commands such as the #t or #f command which causes a
+            (respectively) true or false Datum boolean to be pushed on the 
+            stack. Print to print the top element on the stack, clear to clear
+            it, drop to remove the top element of the stack, when a number is
+            given it will be pushed ont the stack. Additionally, there are 
+            functions like dup to create a copy of the top element, swap to 
+            swap two elements, and not to read and pops the top element as
+            well as a boolean and pushes the opposite value onto the stack. Quit
+            to leave the calculator entirely, and an implementation of all the
+            provided mathematical operators.
+
+            Exec will find the solution to the provided rstring, file will read
+            in the rstrings, and if will execute on one of two rstrings 
+            depending on the value of the boolean they pop from the stack.
+   
+These classes will interact in the sense that DatumStack builds a stack of
+objects and RPNCalc relies on many functions of the stack to perform its
+tasks. Additionally, parser calls a function that returns rstrings for 
+RPNCalc to use and perform tasks on. 
+
+I will use a list to implement my DatumStack class and I think will use some 
+functions of my DatumStack Class to implement RPNCalc like clear, print, drop,
+and pushing a number all correspond pretty well to functions I've written in
+DatumStack. I may also use linked lists for RPNCalc since it seems like have to
+perform operations on the middle of stack for some of the functions.
+
+6. There are three sources of input for processing commands: cin, files, and
+   rstrings. What C++ data type can allow you to write the same code that
+   handles commands from all three of these sources?
+
+Answer:
+   istream
+
+7. What is your timeline for completing this project? What would you like to
+   have completed, and by which dates?        
+
+Answer:
+   By Thursday I would like to have implemented the constructor and destructor
+   and get started on the run function/simpler commands. Over Friday and
+   Saturday I'd like to finish the 'simpler' commands and if I have extra time
+   Saturday start the more complex ones. I think I'll try to get the harder
+   functions done from Sunday to Monday, and I usually do documentation along
+   the way so hopefully by Monday I'm done but if not I still have Tuesday
+   to finish up any loose ends.

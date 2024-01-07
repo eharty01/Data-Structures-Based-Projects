@@ -1,0 +1,237 @@
+(A) *Title, Course, Date, and Author of HW*
+___________________________________________
+Title of Assignment: CalcYouLater (Project 2)
+Author: Eleanor Harty 
+Date: Sept. 18, 2023
+Course: CS15
+
+(B) PURPOSE
+___________
+The purpose of this project is to build a Reverse Polish Notation calculator
+using the data structure stacks which can perform arithmetic on integers, as
+well as make logical comparisons between integers, booleans, and rstrings. It
+should also be able to read in and perform commands from a file given by the 
+user and operations within an rstring, and select from two rstrings which to
+execute based on a given boolean.
+
+(C) ACKNOWLEDGEMENTS
+____________________
+I received help from Kathryn, John, Eddy, Lily, Yoda, Sean, Ollie, Luke, Anush
+and Eli.
+
+(D) FILES PROVIDED
+__________________
+parser.h:
+    Interface of the parser class.
+
+parser.cpp:
+    Implementation of the parser class.
+
+DatumStack.h:
+    Interface of the DatumStack class.
+
+DatumStack.cpp:
+    Implementation of the DatumStack class.
+
+unit_tests.h: 
+    Unit tests for the parser and DatumStack classes.
+
+RPNCalc.h:
+    Interface of the RPNCalc class.
+
+RPNCalc.cpp:
+    Implementation of the RPNCalc class.
+
+fib.cyl:
+    Given file I used to diff test for error messages.
+
+fib_test.cylc:
+    Given file I used to diff test the file command.
+
+test_fact.cylc:
+    Given file I used to diff test the file command.
+
+fib_debug_test.cylc:
+    Given file I used to diff test the file command.
+
+simple_commands.cylc:
+    Commands I used to diff test the 'simpler' commands except for any commands
+    involving operators.
+
+simple_commands_pt2.cylc:
+    Commands I used to diff test the 'simpler' commands including and focusing
+    on commands involving operators.
+
+semi_final.cylc:
+    Commands I used to diff test the 'complex' commands focusing on if, exec,
+    and processing rstrings.
+
+final_test.cylc:
+    Commands I used to diff test the 'complex' commands focusing mostly on file.
+
+test1.cylc:
+    File I placed within my final_test to see if a my file command would work on
+    a file read in from another file.
+
+gross_file.cylc:
+    File I placed within final_test to see if my file command could read a and 
+    execute another file from a file and quit in the middle of a file.
+
+Makefile:
+    Builds an executable for the assignment.
+
+main.cpp:
+    Calls RPN calculator program to start.
+     
+README
+    This file.
+
+(E) HOW TO COMPILE AND RUN
+__________________________
+Final CalcYouLater:
+     - Compile using
+            make
+     - run executable with
+            ./CalcYouLater
+
+For Phase 1:
+     - Compile using
+          make
+     - run with the unit_test command 
+
+(F) DATA STRUCTURES AND ALGORITHMS USED
+_______________________________________
+Data Structure:
+For Phase 1, I used lists to help implement my DatumStack class. Lists use
+noncontiguous storage for elements, internally they do this with doubly linked 
+lists. They can also perform many different commands for users but the ones I
+used for this project were size, clear, front, pop_front, and push front. using
+these I was able to call on the list to report on the size and front of my
+DatumStack as well as add or remove elements to from the front of my DatumStack
+or remove all the elements at once with clear if needed. Some advantages of
+lists are that the time taken to insert or delete something from the front, 
+middle, or back of the list is constant time. This was particularly useful for
+implementing a stack as everything is pushed to the front so unlike with vectors
+where you would have to shift everything over to insert at the front the list
+will do in constant time. A disadvantage of lists is that to access an element
+an element not at the front of the list you have to traverse the list unitl you
+find it, but since stacks only deal with the front this drawback didn't hurt
+lists much as a tool specifically to implement them.
+
+For Phase 2, I used a stack to implement my calculator. Stacks are a good choice
+for an RPN calculator as RPN gives the operation first and then you perform the
+operation on the elements immediately following it, therefore you're always
+dealing with the very front/most recent elements of the sequence of inputs 
+you've given the calculator. This is analogous to how the stack data structure
+works as a "last in first out" structure where elements are exclusively added
+or removed from the top of the stack which is why it's ideal to represent this
+calculator. For this reason it would also be useful if writing a program to
+model a spring loaded plate dispenser where the plate most recently added will
+be the plate first removed or a program modeling a line of customers where
+everyone who joins the line cuts, therefore the most recent person to join the
+line is the person at the front of it and therefore the first to get served.
+Some advantages of stacks is that they're like a restricted versions of lists.
+For example, you can only add items to the front of the stack. These limits 
+are valuable as an abstraction barrier to give us the functions we need without
+extra options that may complicate our code. Another advantage of stacks is that 
+they provide fast access time as you can only access the front of the stack.
+The major drawback about stacks is there is no random access for stacks so you 
+can only ever work with the front the stack.
+
+Algorithm:
+An algorithm I made for this program was when I had to code a way to parse
+rstrings. This code read in input until there was an equal number of opening
+and closing braces or there was no longer any input to take in. Since the first
+opening brace was not included in the istream passed in as the function's 
+argument we had to start the number of opening braces as one artifically and 
+add to that number anytime we took in another opening brace. I also had to keep
+track of the number of closing braces there were and continually check with each
+loop that the number of opening and closing brackets was not equal. If they
+were equal I would exit the loop and return all of the input as well as an 
+opening brace and a space before it to complete the format of an rstring. I had
+read in (which I had stored in a stringstream that with each iteration of the 
+loop took in read in the new input while retaining the older inputs in the 
+order they were read in with a space inbetween each input).
+
+(G) TESTING
+___________
+For Phase 1, I used unit tests to test my parser and DatumStack class. For each
+DatumStack function I wrote 3 tests (with the exception of the constructors)
+to test what each function would do given no datums, a single datum, and many
+datums. I did this to verify it would work for a variety of inputs and check
+if special behavior was working when you encountered an edge case like calling
+top on an empty array of datums and ensure it was printing the correct error
+messages. For my constructors I just ensured the default constructor and 
+constructor were working because in my mind the default constructor corresponds
+to checking behavior for an empty array and if the array is not empty then there
+is only one other case which is that the array isn't empty and in that case you
+use the constructor so I only needed one test for each to ensure it was working
+in the three conditions I tested for the others. All these tests worked without
+me having to change my code.
+
+For the parser function I tested what happened when given an rstring
+numbers and operators, an rstring with text, an rstring with a combination of
+these types of inputs, and a nested rstring. Finally, I tested what would
+happen when given an rstring with additional characters after the rstring. All
+of these tests worked with the exception of the test for additional characters
+after the rstring, this I fixed by changing my loop condition from and to or, 
+as my parser should stop if the number of opening and closing brackets are equal
+or if there is no longer any input.
+
+For Phase 2, I mostly used diff testing. After I completed the simpler functions
+I made two different files (simple_commands and simple_commands_pt2) to test
+them. For simple_commands I tested all of the simple commands except for the 
+commands involving operators (ie pushing a number or bool, not, print, clear, 
+drop, dup, swap, and quit), as well as an edge case I noticed where if you
+input a # it will say print a special message. I included print after every
+command to ensure my output was the same for every function I was calling. This
+is where I noticed I have to drop something after it has been popped from the
+stack and verify that the top of the stack is not empty before I try to access 
+it. Both of these were relatively easy fixes I made a function to verify there
+was a top element and I used the drop command after I accessed the top of the
+stack for something. In simple_commands_pt2, I tested the simple commands
+inolving operations, I tested that it could work with negative numbers, perform
+the operations correctly, and handle edge cases where the user gave invalid 
+input, compared nonintegers (using and not using ==), and tried to divide or 
+modify something by 0 (it also tested if the program would end correctly even if
+I didn't call quit). These tests worked fine and I started to implement the
+harder commands after this.
+
+For the harder commands I used some of the given files as well as my own, I used
+semi_final to test my ability to read in rstrings, as well as my exec and if 
+functions (and also a little bit my file command). I focused on the other 
+functions though because in my mind they were more similar all revolving around
+rstrings. I tested giving correct inputs to these functions to see if they would
+perform them properly as well as edge cases where a user would give empty 
+brackets, a nested rstring, partially correct inputs for if (like some are 
+rstrings where they need to be but there is no boolean etc) and calling things 
+like exec or print within an rstring. I also tested there that if I called quit
+and put commands after that it would quit and not read those commands. I printed
+my output after commands to ensure it was matching the reference. From
+this test I learned I still need to drop the top of the stack once I read it in
+for functions like exec, file, and if or the program keep calling the same 
+command. I also realized I should print my goodbye statement outside of the 
+function that runs my query loop and only print that once the function is done 
+running (otherwise it would print multiple times). 
+
+I then made my final_test file to see how my program would handle working with 
+real files to read in (and also one fake one), I tested if it could read in 
+files like gross_file and test1. Gross_file tested that it could carry out 
+commands given to it by a file and could open a file within a file. Finally, 
+that it could quit if I called quit within a file. Once I figured out that I 
+needed to delete the whitespace around the filename for it to be readin 
+correctly, this test worked. After that I used some of the provided files like 
+fib, fact, and fib_debug by calling them from my own files fib_test, test_fact, 
+and fib_debug_test and those worked. I also used the fib.cyl as it was to test 
+my error messages since it was filled with comments, and that also worked. 
+Overall I basically just tried to run any test files given to me since I assumed
+they would contian cases we were supposed to handle and in testing files I made
+test as many edge cases as I could think of and ensure my code was also working
+when given more normal inputs.
+
+(H) HOURS SPENT
+_______________
+
+I spent roughly 5 hours on phase 0 and 1.
+
+I spent roughly 18 hours on phase 2, so about 23 hours total.

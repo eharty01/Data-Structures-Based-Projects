@@ -1,0 +1,13 @@
+{ gross_file.cylc }
+print
+file
+print
+{ dog }
+file
+print
+{ test1.cylc }
+file
+print
+{ fakefile.cylc }
+file
+print

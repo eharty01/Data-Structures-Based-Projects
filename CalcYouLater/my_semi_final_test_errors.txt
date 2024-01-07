@@ -1,0 +1,10 @@
+Error: empty_stack
+Unable to read cat
+Unable to read 
+}: unimplemented
+Error: cannot execute non rstring
+Error: expected boolean in if test
+Error: expected rstring in if branch
+Error: expected rstring in if branch
+dog: unimplemented
+Thank you for using CalcYouLater.

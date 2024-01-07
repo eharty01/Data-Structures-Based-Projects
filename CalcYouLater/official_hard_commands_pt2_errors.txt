@@ -1,0 +1,9 @@
+dog: unimplemented
+Error: empty_stack
+Error: empty_stack
+Error: invalid boolean #
+Error: empty_stack
+Error: empty_stack
+Error: empty_stack
+Error: datum_not_bool
+Thank you for using CalcYouLater.

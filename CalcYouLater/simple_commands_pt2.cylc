@@ -1,0 +1,31 @@
+0 0 / print
+4 5 + print
+3 7 - print
+4 * print
+6
+1 2 / print
+3
+4 0 mod print
+-123 -19 - print
+-5 -4 * print
+-19 -19 / print
+hand
+0 0 > print
+#f #t < print
+3 4 <= print
+hand print
+5 5 <= print
+7 >= print
+clear
+mod
+#f #f == print
+#t #f == print
+8 2 mod print
+7 4 mod print
+. print
+-17.5 -5 <
+1 8 <
+100 6 >
+100 101 >
+101 >= 100
+2890 >= 2890
