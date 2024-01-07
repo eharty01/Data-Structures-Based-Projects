@@ -1,0 +1,7 @@
+The other simple cases I've handled have been pretty short, I've heard The
+all_conll thing takes a while and might not be worth it. So I figured I'd make
+my own test that won't take as long to run, but hopefully gets at the same 
+idea. Below I'm gonna write some random characters to see if my program can
+handle them.
+
+^&#()*@)*)%IO%)_!~_+$ Î Ż Ë Èê
