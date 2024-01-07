@@ -1,0 +1,204 @@
+(A) *Title, Course, Date, and Author of HW*
+Title of HW: hw_linkedlists (HW 2 Cheshire ConCATenation)
+Author: Eleanor Harty 
+Date: Sept. 24, 2023
+Course: CS15
+
+(B) PURPOSE
+This program is to teach students how to create and manipulate linked lists
+and just generally get more experience interacting with the data structure to
+understand it better. As well as familiaze themselves with unit testing and
+style conventions of CS15.
+
+(C) ACKNOWLEDGEMENTS
+I received help from many TAs including Alana, Lily, Cameron, Yoda, 
+Erin, Anush, Eli, Lily, and Jeff.
+
+(D) FILES PROVIDED
+
+    CharLinkedList.cpp: Implementation of CharLinkedList class.
+
+    CharLinkedList.h: Interface of the CharLinkedList class.
+
+    unit_tests.h: Unit tests for the CharLinkedList class.
+
+    Makefile: compiles and runs the program.
+
+    README: This file.
+
+(E) HOW TO COMPILE AND RUN
+Use the unit_test command to compile and run the program.
+
+(F) DATA STRUCTURES AND ALGORITHMS USED
+This week we practiced writing linked lists. The way linked lists work is that
+they're made up of nodes which contain data and a pointer to another node.
+Specifically, I worked with doubly linked lists so in our nodes had pointers
+to both the node in front of and behind it and contained a char variable. I
+also specified a pointer to the front and back of the list to make these
+particular nodes easier to find. Some advantages of using a linked lists is
+that they're faster at inserting or removing things from the front of the list
+than array lists are and their structure lends itself to recursion which made
+creating recursive helper functions for my implementation of some functions
+easier (specifically the destructor, replaceAt and elementAt). A disadvantage
+of linked lists is that you can't calculate memory addresses based on indices
+so it takes longer to find data in the middle of the list in comparison to 
+array lists.
+
+(G) TESTING
+I reused my testing from HW 1 as well as the insertAt tests provided in that
+assignment because I knew the results the unit tests test should be the same.
+I then worked on the functions basically in the order listed in the
+spec for HW 2. I wrote those tests so that each function was tested in a 
+minimum of 3 cases: once with an empty list, once with a single char list, 
+and once with an a list of many char. Additionally if the function had any
+cases that would throw an error I tested for those. Because I was testing for
+a wide variety of cases and edge cases I felt that my private helper functions
+were implicitly being tested by them (especially since usually essentially the
+only thing the public function getting tested was doing was calling the private
+function). Similarly the destructor is implicitly tested by valgrind and the 
+fact that the code runs at all. Most of my functions worked but I got stuck on
+insertAt function for a while but figured out from the errors my pointers were
+off so I drew a picture and fixed them which worked but then it didn't pass
+Valgrind and I looked at where I was deleting stuff and realized
+it was because I was unnecessarily deleting the node after I was inserting it. 
+
+Everything then worked pretty well after that except that for insertInOrder 
+and concatenate I kept getting into infinite loops which I was able to fix 
+by adjusting the condition of the while loop. For insertInOrder I had gotten
+confused by the boolean and was setting the condition to the opposite of what 
+I wanted it to be. For concatenate I again drew out the pointers and realized
+I was going further than the actually nodes in the linked list so I switched
+the condition from using pointers to counting down from the size of the other
+list.
+
+(H) HOURS SPENT
+I spent 18 hours on this homework.
+
+(I) TIMER QUESTIONS
+----------------------------------------------------------------------
+INSERTION OPERATION                                 Time (nanoseconds)
+----------------------------------------------------------------------
+pushAtFront 100 times                               3433              
+----------------------------------------------------------------------
+pushAtBack 100 times                                2258              
+----------------------------------------------------------------------
+insertAt middle of list 100 times                   2559309           
+----------------------------------------------------------------------
+REMOVAL OPERATION                                   Time (nanoseconds)
+----------------------------------------------------------------------
+popFromFront 100 times                              2351              
+----------------------------------------------------------------------
+popFromBack 100 times                               2068              
+----------------------------------------------------------------------
+removeAt middle of list 100 times                   2389643           
+----------------------------------------------------------------------
+ACCESS OPERATION                                    Time (nanoseconds)
+----------------------------------------------------------------------
+call first() 100 times                              636               
+----------------------------------------------------------------------
+call last() 100 times                               624               
+----------------------------------------------------------------------
+call elementAt() for middle of list 100 times       5466746           
+----------------------------------------------------------------------
+
+QUESTION 1: (the units for all numbers are nanoseconds)
+    INSERTION (fastest to slowest): pushAtBack (2258), pushAtFront (3433),
+    insertAt middle of list (2559309)
+
+    REMOVAL (fastest to slowest): popFromBack (2068), popFromFront (2351),
+    removeAt middle of the list (2389643)
+
+    ACCESS (fastest to slowest): call last() (624), call first() (636),
+    call elementAt() for middle of list (5466746)
+
+QUESTION 2:
+Across the all the operations we can see that the functions pertaining to
+the front and the back of the list take almost the same time and 
+are considerably faster than the functions involving the middle of the list.
+This is because in my linked list I implemented a pointer to the front and 
+back nodes so we can find the front and back of the list immediately 
+for the access operation, and for the insertion and removal operations we 
+can find the desired node quickly and just adjust the pointers
+according to whether we are inserting into or removing from the list without
+changing the rest of the list making the operation very quick. 
+
+While the same is true for inserting or removing from the middle of the list 
+(in that to add or remove you can do this by adjusting pointers and 
+without having to change the rest of the list) it takes a while to find 
+the node at which you want to make the insertion or removal because linked
+lists are not indexed so you have to follow the nodes throughout the linked
+list to find the correct one, this is also why access takes so much time 
+because you have to take time searching through the list to find the requested
+node.
+
+QUESTION 3:
+Comparing the times we see access is faster overall for array lists, though the
+times for front and back times are similar, accessing the middle of the list is
+much faster. This is because array lists are indexed so knowing the index you
+can go directly to that spot to access the desired index, linked lists are 
+indexed so to find an index in the middle of the linked list you have to search
+through the entire linked list until you find the node that was asked for.
+
+Comparing the times we can see removal and insertion are overall with linked
+lists, though the times for inserting/removing at the back or middle are fairly
+similar, inserting/removing at the front of the list is much faster
+using linked lists. This is because linked lists connect nodes through pointers
+so when adding or deleting a node you can simply adjust the pointers for node 
+in question as well as the nodes directly in front or behind it and you can
+successfully add or remove a node without adjusting the rest of the list. 
+Because data is stored contiguously in array lists, when you add or remove an
+element you need to shift all the elements after it (the direciton of the
+shift depends on whether you were adding or deleting). Since you have to shift
+the rest of the list over from where you inserted or removed an element this 
+operation will take longer for array lists than linked lists (except if you're
+adding or removing at the back because then there are no elemnts after it to
+adjust).
+_______________
+OTHER QUESTIONS
+
+Q1:
+The pushAtFront function was easier to implement in linked lists because all
+you had to do was create the new node and make the original front of the node's
+previous pointer point to this new node (making it the new front). To do this
+for the array list I first had to ensure there was enough space (and if not
+add more), and since array lists are contiguous I had to shift all the data
+in the array up by one index to insert the new element at the front. 
+
+Similarly for popFromFront in linked lists you could adjust the pointers of 
+the node after the previous front node and then delete the previous front
+to successfully remove that node. However for array lists all the elements had
+to be shifted down by one index to remove the front.
+
+Basically what our timer indicated was faster in linked lists was easier to 
+implement as inserting or removing at the front or back of a linked list
+doesn't require you to shift the entire list like you have to for array lists.
+
+Q2:
+The destructor was harder to implement in the linked list compared to the array
+list, for the array list I just had to delete my array because the data is all
+stored together but since linked lists aren't contiguous I had to make a
+to recursively move through the nodes deleting each one. 
+
+It was also easier to implement elementAt for array lists since they're indexed
+so knowing the index of the requested information I could immediately access 
+that spot. For linked lists however, you need to move through the list
+incrementing an integer variable (which started at 0) each time until it 
+eventually matches the given index and you know you're in the right spot.
+
+Overall, as the timer indicated it was faster/easier to access a random element
+in array lists because the data is all in the same spot and 'labeled' with an
+index. Additionally since array lists are contiguous/all the data is together
+it was easier to delete. Linked lists on the other hand aren't contiguous so
+you have to go through the list and track down a node yourself to delete it or
+check if it's the one you want.
+
+Q3:
+Since this is the client and they don't have to worry about our code and just
+its functionality all they would have to do is switch the name of what their
+program is using from CharArrayLists to CharLinkedLists. This is because
+they output all the same things as they're performing all the same tasks, the 
+only difference is one performs these tasks using array lists and the other 
+with linked lists. However, since they will provide the same results, those 
+details don't matter to someone like a client who is using it, the only thing
+they would have to do to their code is change the name from CharArrayLists to 
+CharLinkedLists and everything else can stay the same.
