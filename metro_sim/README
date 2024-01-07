@@ -1,0 +1,249 @@
+/**********************************************************
+* Project 1: Metro Simulator
+* CS 15
+* README
+*
+* Eleanor Harty
+* Oct. 4, 2023
+*********************************************************/
+
+Compile/run:
+____________
+
+     Final MetroSim:
+     - Compile using
+            make MetroSim
+     - run executable with
+            ./MetroSim stationsFile passFile [commands]
+
+     For Phase 1:
+     - Compile using
+          make
+     - run with the unit_test command (final MetroSim doesn't link to
+     unit_tests)
+
+
+Program Purpose:
+________________
+
+     Introduce students to queues, vectors, and lists while giving them a 
+     chance to interact and work with them. This is done throuhg
+     implementing new data structures students will learn about the importance
+     of restrictions and how vectors or lists can improve modularity as well as
+     new techniques for testing these new data structures. 
+
+Acknowledgements: 
+_________________
+
+     I got help from many TAs including Andersen, Luke, Kathy, Vedant, Eddy,
+     Olivia, Anush, Erin, Lily, Luke, Yoda, and Sarah.
+
+
+Files: 
+______
+
+main.cpp:
+     Main file should be short and handle simple driver
+     functions such as reading in files.
+
+MetroSim.cpp:
+     Implementation of MetroSim class.  Main
+     functionality of running the Metro Simulation, should be able to
+     move trains and deal with passengers going on/off the train.
+
+MetroSim.h:
+     Interface of MetroSim class.
+
+stations.txt:
+     an example file containing a list of stations.
+
+test_commands.txt:
+     sample list of commands I used to diff test my simulator
+
+the_metroSim:
+     reference implementation for students to see how 
+
+Passenger.h:
+     Interface of the Passenger class.
+
+Passenger.cpp:
+     Implementation of the Passenger class.
+
+PassengerQueue.h:
+     Interface of the PassengerQueue class.
+
+PassengerQueue.cpp:
+     Implementation of the PassengerQueue class.
+
+unit_tests.h: 
+     Unit tests for the Passenger, PassengerQueue, main, and MetroSim class.
+
+m_f_command.txt:
+     Commands I used to diff test if the m f command was working in my MetroSim.
+
+m_m_commands.txt:
+     Commands I used to diff test if the m m command was working in my MetroSim.
+
+p_command.txt:
+     Commands I used to diff test if the p command was working in my MetroSim.
+
+blended_commands.txt:
+     Commands I used to diff test if a mix of commands were working in my 
+     MetroSim.
+
+README
+     This file.
+
+Data Structures:
+________________
+
+For Phase 1 the data structures I used were queues and vectors. Queues as a 
+data structure are most analogous to waiting in a line, queues are first in 
+first out (FIFO) data structures, basically the first thing you add leaves 
+the queue first. Queues are essentially restricted versions of lists, for
+example, you can't add or remove items in the middle of the queue. These limits
+are valuable as an abstraction barrier to give us the functions we need without
+extra options that may complicate our code. To perform operations on my queue
+I also used a vector to implement functions for my PassengerQueue.cpp. Vectors
+use contiguous storage for elements, internally they do this via dynamically
+allocated arrays, they can carry out many different commands but the ones I used
+in for this project were the push_back, erase, begin, size and front. So I
+could call on the vector to insert and remove items from the correct location
+and report on the size and front of the list.
+
+For the second part of my project I also used queues and vectors. Specifically,
+I made used my PassengerQueue when constructing my stations so that all stations
+had a queue of passengers waiting at them for when my train arrived, this made
+them easy to board as we just moved the first passenger waiting at the station
+onto the train, dequeued them from the station and moved the next 'first' 
+waiting passenger until there were no passengers left. Another reason I could 
+perform these commands was that I made my stations vectors so I could use those
+functions on passengers. My train was simply a vector of a PassengerQueue,
+this way I could easily add passengers to the queue at their appropriate spot
+based on where they exit. This was another benefit of using vectors for the
+trian and station as I could access the specific element in the queue I wanted
+to access as opposed to a list where you can only access the front or back.
+
+Overall, I would say the advantages of queues are that they can handle a large 
+amount of data and you can delete things at the front and insert things at the 
+back easily. They can also be used in the implementation of other data 
+structures which was very useful. The disadvantages of using queues are that 
+they have a limited space and since you only directly have access to the front 
+or back searching for elements and inserting/deleting elements in the middle is 
+time consuming. Some advantages of vectors is that they resize themselves
+dynamically and allocate/eallocate memory by themselves which means less
+tasks for the programmer to think about. They also provide quick access to
+elements which was really useful for this project to access a specific 
+passenger or station. Finally, a disadvantage of vectors are that inserting or
+removing elements not at the end is inefficient as you need to shift the ohter
+elements.
+
+Testing:
+________
+
+I first implemented and tested my Passenger.cpp, since there was only one
+function I only wrote two tests. One to ensure it printed the correct default
+passenger and one to test that if there was a specific passenger to print it 
+would do so correctly. I had some trouble at first figuring out how to
+initialize a passenger in the unit test file but after I talked to a TA I was
+able to print the passenger and finished the testing for that class quickly.
+
+Then I began testing for my functions in PassengerQueue.cpp, with the exception
+of the tests for the front function, I wrote my tests in the order they were
+listed on the spec. I mostly relied on the enqueue function to populate my
+queue and the print function to ensure I was getting the results I wanted when
+adding, removing, or accessing an element. I tried to consider the different 
+cases that might occur by having cases for an empty queue a queue with one
+element and a queue with several elements (except for front and dequeue where
+they said we didn't have to worry about an empty queue). For most functions
+I printed the queue after the desired function was run and asserted what it 
+should be (except for size where I didn't print but just asserted what 
+integer size should return and all those went smoothly). The function I had the
+most trouble testing was front because I couldn't assert that a struct was 
+equal to a struct. In fact I haven't quite figured out how to implement it so 
+I commented out my code to test the front for now. Later I solved the problem
+by just using a assert statements for key parts of what the front should look 
+like (ie passenger id) to see if the function was running properly and that 
+seemed to work.
+
+For MetroSim.cpp, I implemented my commands roughly in the order they were
+given with the exception of the m f command which I implemented and tested
+first. I did this because since it was only printing out a good bye message and
+breaking out of the query loop it would be hard to mess up, this way in my diff
+tests I could mainly focus on if my simulation was printing correctly initially
+and if I was reading in my stations and command correctly since running the m f
+command implicitly relied on all of that. When I first diffed I realized two
+things, first I had forgot to add a newline at the end of my message and second
+that I had not placed a call to print my function outside my query loop so I was
+not printing the initial state of the simulation at all it was printing the
+correct message so I knew my command file was being read in correctly. The were
+differences I was getting were also relatively easy fixes, I just put in a new 
+line and a print call before I read in commandsand when I diffed again I could 
+see that I was reading in my files correctly, however I noticed (which may have
+also shown up in my first test but I was distracted by the other errors) that I
+wasn't placing the {} brackets outside of my list of passengers currently on
+board. This again was a relatively easy fix I just went to my print function
+and added them around the place where I print the list of passengers currently
+on the train. After this my m f command passed diff so based on this I knew that
+not only was my m f command working but implicitly that I was reading in and
+building stations correctly from my stations file, and reading in commands 
+correctly, and that (at least of m f) my query loop was working.
+
+Next I focused solely on my p command and tried to consider a variety of cases.
+For example I placed passengers at the first station, passengers who arrived
+and departed in middle stations, passengers who arrived at the final station, 
+passengers that departed at the final station, passengers who would enter and
+exit at the same station, and passengers that got on at a high indexed station
+station and "looped" back around to one of the 'earlier' stations. The only
+thing I didn't write a case to test for was invalid stations like negative
+numbers or stations out of range (as well as invalid commands in general),
+because when I ran them on the MetroSim they printed an error message that said
+the command was invalid as it was out of range and at the end a note that said 
+students don't need to handle invalid commands. I also tested passengers who 
+boarded at earlier stations but were added later in the command list to see if 
+their passenger id would be correct. Finally, I didn't include an m f command
+at the end to see if the program would still print the good bye message if they
+ran out of lines. Everything passed this diff test except I wasn't printing the
+goodbye message, so I added it outside of my while loop in addition to inside
+when the m f command is called. After that it worked.
+
+Then I tested my m m command by calling the command more than 25 times (so
+the train would have to loop around) to the beginning again. This led to a seg
+fault and probably my hardest thing to debug because I couldn't understand why
+it was happening since this program shouldn't really have memory leaks
+but then I looked at my output and saw my train was "disappearing" and realized
+it was an indexing error in my m m command and I was accidentally accessing a 
+station that didn't exist (as I was comparing train position to total stations
+but train positions is zero indexed and train position is not), but after 
+comparing train position to the number of total stations minus 1 the code
+worked. After that I tested a blend of commands, I essentially used all
+the different types of passengers I had tested for my p command 
+throughout a sequence of over 30 m m commands that forced the train to loop and
+put an m f command with more commands after it to see if it would really stop
+at m f even if there were other lines. This made me realize I had to board my
+passengers, increment the train, and then exit them instead of boarding and then
+exiting because otherwise your boarding passengers and immediately kicking them
+off. This wasn't terrible to fix as I just changed where I call my exit function
+but it was a bit difficult to recognize. After that change my outputs diffed and
+when this test worked so I tried the command file provided and that worked fine.
+
+Finally I tried what would happen if I provided files that wouldn't open and an
+incorrect number of files to make sure we were generating the same errors and 
+those generated the same errors from both programs. Overall I tried to think of
+and test as many edge cases as I could through diffing and my unit tests.
+
+Part that you found most difficult:
+
+To be honest the most difficult part for me was debugging the code that was
+seg faulting because I didn't understand what was going wrong and it was very
+confusing for me until I realized it wasn't a memory leak but something
+different (as I had always thought of seg faulting as another kind of 
+memory/data loss) so it took me a while to figure out.
+
+Time Spent:
+___________
+
+     I spent about 5 hours on Phase 1.
+
+     I spent roughly 12 hours on the second part of MetroSim. Total I'd say I
+     spent a little under 20 hours on the project.
